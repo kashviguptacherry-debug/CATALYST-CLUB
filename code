@@ -1,0 +1,156 @@
+the_catalyst_club/
+│
+├── app.py
+│
+├── templates/
+│   ├── home.html
+│   ├── achievements.html
+│   ├── team.html
+│   ├── lost_found.html
+│   └── submit_success.html
+│
+└── static/
+    └── images/
+        ├── ach1.jpg
+        ├── ach2.jpg
+        ├── lost1.jpg
+        └── lost2.jpg
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+@app.route("/achievements")
+def achievements():
+    return render_template("achievements.html")
+
+@app.route("/team")
+def team():
+    return render_template("team.html")
+
+@app.route("/lost-found")
+def lost_found():
+    return render_template("lost_found.html")
+
+@app.route("/submit-lost-form", methods=["POST"])
+def submit_lost_form():
+    name = request.form.get("name")
+    item = request.form.get("item")
+    location = request.form.get("location")
+    contact = request.form.get("contact")
+
+    print("Lost Item Report Received:")
+    print(name, item, location, contact)
+
+    return render_template("submit_success.html", name=name)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Catalyst Club</title>
+    <style>
+        body { font-family: Arial; background: #e8f0ff; text-align: center; }
+        a { 
+            font-size: 22px; 
+            display: block; 
+            margin: 20px; 
+            text-decoration: none; 
+            color: #0033cc;
+        }
+        a:hover { color: #000; }
+    </style>
+</head>
+<body>
+    <h1>THE CATALYST CLUB</h1>
+    <h3>Official School Website</h3>
+
+    <a href="/achievements">Achievements</a>
+    <a href="/team">Our Team</a>
+    <a href="/lost-found">Lost & Found</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Achievements</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+    <h1>Our Achievements</h1>
+
+    <img src="/static/images/ach1.jpg" width="300">
+    <img src="/static/images/ach2.jpg" width="300">
+
+    <br><br>
+    <a href="/">Back Home</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Members</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+    <h1>Meet Our Team</h1>
+
+    <h3>Founder: Ilisha Gupta</h3>
+    <h3>Co-Founder: (Add Name)</h3>
+
+    <h3>Members:</h3>
+    <ul style="list-style:none; padding:0;">
+        <li>Student 1</li>
+        <li>Student 2</li>
+        <li>Student 3</li>
+        <li>Student 4</li>
+    </ul>
+
+    <br>
+    <a href="/">Back Home</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost & Found</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+    <h1>Lost & Found</h1>
+
+    <h3>Items Found:</h3>
+    <img src="/static/images/lost1.jpg" width="250">
+    <img src="/static/images/lost2.jpg" width="250">
+
+    <hr><br>
+
+    <h2>Report a Lost Item</h2>
+
+    <form action="/submit-lost-form" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required><br><br>
+        <input type="text" name="item" placeholder="Lost Item" required><br><br>
+        <input type="text" name="location" placeholder="Where It Was Lost" required><br><br>
+        <input type="text" name="contact" placeholder="Your Contact" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <br><br>
+    <a href="/">Back Home</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submission Successful</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+    <h1>Form Submitted!</h1>
+    <h3>Thank you, {{ name }} — we received your lost item report.</h3>
+
+    <br>
+    <a href="/">Back Home</a>
+</body>
+</html>
+static/images/
